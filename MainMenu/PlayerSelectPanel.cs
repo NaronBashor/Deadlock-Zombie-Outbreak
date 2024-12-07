@@ -16,6 +16,8 @@ public class PlayerSelectPanel : MonoBehaviour
     public GameObject maleButton;
     public GameObject femaleButton;
 
+    public Button confirmCharacterButton;
+
     public Image maleImage;
     public Image femaleImage;
 
@@ -28,6 +30,8 @@ public class PlayerSelectPanel : MonoBehaviour
     {
         playerNamePanel.SetActive(false);
         ShowFighterText();
+
+        confirmCharacterButton.onClick.AddListener(() => LoadGame());
     }
 
     private void Update()
@@ -55,11 +59,10 @@ public class PlayerSelectPanel : MonoBehaviour
         }
         if (playerNamePanel != null) {
             if (playerNamePanel.activeSelf) {
-                if (inputField.text.Length >=3 && Keyboard.current.enterKey.wasPressedThisFrame || Gamepad.current.startButton.wasPressedThisFrame) {
+                if (inputField.text.Length >=3 && Keyboard.current.enterKey.wasPressedThisFrame || Gamepad.current != null) {
                     GameSettings.playerName = inputField.text;
-                    if (GameManager.Instance != null && GameManager.Instance.playerProgress != null) {
-                        GameSettings.LoadPlayerProgress(GameManager.Instance.playerProgress);
-                        SceneManager.LoadScene("Game");
+                    if (GameManager.Instance != null && GameManager.Instance.playerProgress != null && Gamepad.current.startButton.wasPressedThisFrame || Keyboard.current.enterKey.wasPressedThisFrame) {
+                        LoadGame();
                     }
                 }
                 if (Keyboard.current.escapeKey.wasPressedThisFrame) {
@@ -109,5 +112,11 @@ public class PlayerSelectPanel : MonoBehaviour
         GameSettings.characterChosen = 1;
         FemalePlayerNameSelectPanel();
         GameSettings.SaveSettings();
+    }
+
+    private void LoadGame()
+    {
+        GameSettings.LoadPlayerProgress(GameManager.Instance.playerProgress);
+        SceneManager.LoadScene("Game");
     }
 }

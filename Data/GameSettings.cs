@@ -20,7 +20,7 @@ public static class GameSettings
     public static float playerMoveSpeed = 5f;
     public static float rotationSpeed = 8f;
     public static float playerHealAmount = 25f;
-    public static bool usingController = true;
+    public static bool usingController = false;
     public static bool mute = false;
 
     public static List<SavedInventorySlot> inventoryData = new List<SavedInventorySlot>();
@@ -148,7 +148,7 @@ public static class GameSettings
         playerMoveSpeed = 5f;
         rotationSpeed = 8f;
         playerHealAmount = 25f;
-        usingController = true;
+        usingController = false;
         mute = false;
         characterChosen = -1;
 
